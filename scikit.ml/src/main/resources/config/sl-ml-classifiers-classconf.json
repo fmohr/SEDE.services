@@ -1,0 +1,559 @@
+{
+    "de.upb.sede.services.mls.DataSetService": {
+        "methods": {
+            "$construct": {
+                "params": [
+                    "String"
+                ]
+            },
+            "createUnique": {
+                "params": [
+                    "LabeledInstances"
+                ],
+                "static": true,
+                "returntype": "de.upb.sede.services.mls.DataSetService"
+            },
+            "createNamed": {
+                "params": [
+                    "LabeledInstances",
+                    "String"
+                ],
+                "static": true,
+                "returntype": "de.upb.sede.services.mls.DataSetService"
+            },
+            "all": {
+                "statemutating": false,
+                "returntype": "LabeledInstances"
+            },
+            "allLabeled": {
+                "params": [
+                    "Number"
+                ],
+                "statemutating": false,
+                "returntype": "LabeledInstances"
+            },
+            "fromIndices": {
+                "params": [
+                    "builtin.List"
+                ],
+                "statemutating": false,
+                "returntype": "LabeledInstances"
+            },
+            "fromIndicesLabeled": {
+                "params": [
+                    "builtin.List",
+                    "Number"
+                ],
+                "statemutating": false,
+                "returntype": "LabeledInstances"
+            }
+        }
+    },
+    "$list_option_handler_config$" : {
+        "abstract": true,
+        "methods": {
+            "set_options": {
+                "params": [
+                    "builtin.List"
+                ]
+            }
+        }
+    },
+    "$dict_option_handler_config$" : {
+        "abstract": true,
+        "methods": {
+            "set_options_dict": {
+                "params": [
+                    "builtin.Dict"
+                ],
+                "statemutating": true
+            }
+        }
+    },
+    "$base_classifier_config$": {
+        "abstract": true,
+        "methods": {
+            "train": {},
+            "predict": {}
+        }
+    },
+    "wrappers.sk.WrappedClassifier": {
+        "extends": [
+            "$base_classifier_config$", "$list_option_handler_config$", "$dict_option_handler_config$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    "String"
+                ]
+            },
+            "train": {
+                "params": [
+                    "LabeledInstances"
+                ]
+            },
+            "predict": {
+                "params": [
+                    "LabeledInstances"
+                ],
+                "returntype": "numpy.ndarray",
+                "statemutating": false
+            },
+            "set_options": {
+                "params": [
+                    "builtin.List"
+                ]
+            }
+        }
+    },
+    "$Basic_sk_classifier$": {
+        "wrapper": "wrappers.sk.WrappedClassifier"
+    },
+    "$Ensemble_sk_classifier$": {
+        "wrapper": "wrappers.sk.WrappedClassifier"
+    },
+    "$Meta_sk_classifier$": {
+        "wrapper": "wrappers.sk.WrappedClassifier"
+    },
+    "$Clustering_sk_classifier$": {
+        "wrapper": "wrappers.sk.WrappedClassifier"
+    },
+    "sklearn.ensemble.AdaBoostClassifier": {
+        "extends": [
+            "$Meta_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.ensemble.AdaBoostClassifier\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.ensemble.BaggingClassifier": {
+        "extends": [
+            "$Meta_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.ensemble.BaggingClassifier\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.mixture.BayesianGaussianMixture": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.mixture.BayesianGaussianMixture\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.naive_bayes.BernoulliNB": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.naive_bayes.BernoulliNB\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.tree.ExtraTreeClassifier": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.tree.ExtraTreeClassifier\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.ensemble.ExtraTreesClassifier": {
+        "extends": [
+            "$Ensemble_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.ensemble.ExtraTreesClassifier\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.naive_bayes.GaussianNB": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.naive_bayes.GaussianNB\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.gaussian_process.GaussianProcessClassifier": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.gaussian_process.GaussianProcessClassifier\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.ensemble.GradientBoostingClassifier": {
+        "extends": [
+            "$Ensemble_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.ensemble.GradientBoostingClassifier\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.neighbors.KNeighborsClassifier": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.neighbors.KNeighborsClassifier\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.neighbors.LSHForest": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.neighbors.LSHForest\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.discriminant_analysis.LinearDiscriminantAnalysis": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.discriminant_analysis.LinearDiscriminantAnalysis\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.svm.LinearSVC": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.svm.LinearSVC\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.linear_model.LogisticRegression": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.linear_model.LogisticRegression\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.linear_model.LogisticRegressionCV": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.linear_model.LogisticRegressionCV\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.naive_bayes.MultinomialNB": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.naive_bayes.MultinomialNB\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.neighbors.NearestNeighbors": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.neighbors.NearestNeighbors\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.svm.NuSVC": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.svm.NuSVC\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.linear_model.PassiveAggressiveClassifier": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.linear_model.PassiveAggressiveClassifier\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.discriminant_analysis.QuadraticDiscriminantAnalysis": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.discriminant_analysis.QuadraticDiscriminantAnalysis\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.neighbors.RadiusNeighborsClassifier": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.neighbors.RadiusNeighborsClassifier\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.ensemble.RandomForestClassifier": {
+        "extends": [
+            "$Ensemble_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.ensemble.RandomForestClassifier\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.linear_model.RidgeClassifier": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.linear_model.RidgeClassifier\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.linear_model.RidgeClassifierCV": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.linear_model.RidgeClassifierCV\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.linear_model.SGDClassifier": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.linear_model.SGDClassifier\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.svm.SVC": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.svm.SVC\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.neural_network.MLPClassifier": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.neural_network.MLPClassifier\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "sklearn.tree.DecisionTreeClassifier": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"sklearn.tree.DecisionTreeClassifier\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "tflib.neuralnet.NeuralNet": {
+        "extends": [
+            "$Basic_sk_classifier$"
+        ],
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "fixed": "\"tflib.NeuralNet\"",
+                        "type": "String"
+                    }
+                ]
+            }
+        }
+    },
+    "tflib.NeuralNet": {
+        "wrapper" : "tflib.neuralnet.NeuralNet"
+    }
+}

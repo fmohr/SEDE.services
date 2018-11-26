@@ -1,0 +1,10 @@
+{
+    "demo.types.NummerList": {
+        "semantic_type": "Arr",
+        "onthological_caster": "demo.types.DemoCaster"
+    },
+    "demo.types.Punkt": {
+        "semantic_type": "Arr",
+        "onthological_caster": "demo.types.DemoCaster"
+    }
+}

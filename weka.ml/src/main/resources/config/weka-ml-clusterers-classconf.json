@@ -1,0 +1,80 @@
+{
+  "$list_option_handler_config$" : {
+    "abstract": true,
+    "methods": {
+      "set_options": {
+        "params": [
+          "builtin.List"
+        ]
+      }
+    }
+  },
+  "$dict_option_handler_config$" : {
+    "abstract": true,
+    "methods": {
+      "set_options_dict": {
+        "params": [
+          "builtin.Dict"
+        ],
+        "statemutating": true
+      }
+    }
+  },
+  "$base_clusterer_config$": {
+    "abstract": true,
+    "methods": {
+      "build": {},
+      "cluster": {}
+    }
+  },
+  "de.upb.sede.services.mls.WekaBClustererWrapper": {
+    "extends": [
+      "$base_clusterer_config$", "$list_option_handler_config$", "$dict_option_handler_config$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          "String"
+        ]
+      },
+      "build": {
+        "params": [
+          "LabeledInstances"
+        ]
+      },
+      "cluster": {
+        "params": [
+          "LabeledInstances"
+        ],
+        "returntype": "builtin.List",
+        "statemutating": false
+      }
+    }
+  },
+  "weka.clusterers.Canopy" : {
+    "wrapper": "de.upb.sede.services.mls.WekaBClustererWrapper",
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.clusterers.Canopy\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.clusterers.SimpleKMeans" : {
+    "wrapper": "de.upb.sede.services.mls.WekaBClustererWrapper",
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.clusterers.SimpleKMeans\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  }
+}

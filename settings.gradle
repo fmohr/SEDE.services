@@ -1,0 +1,28 @@
+import java.io.File;
+enableFeaturePreview('STABLE_PUBLISHING')
+
+
+/*
+ * Projects offering services.
+ */
+def serivceFolder = './'
+include 'builtins'
+project(':builtins').projectDir = new File(serivceFolder, "builtins")
+
+include 'c2.image'
+project(':c2.image').projectDir = new File(serivceFolder, "c2.image")
+
+include 'demolib'
+project(':demolib').projectDir = new File(serivceFolder, "demolib")
+
+include 'catalano.image'
+project(':catalano.image').projectDir = new File(serivceFolder, "catalano.image")
+
+include 'weka.ml'
+project(':weka.ml').projectDir = new File(serivceFolder, "weka.ml")
+
+include 'scikit.ml'
+project(':scikit.ml').projectDir = new File(serivceFolder, "scikit.ml")
+
+rootProject.name = 'SEDE.services'
+

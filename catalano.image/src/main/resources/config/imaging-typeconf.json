@@ -1,0 +1,22 @@
+{
+    "Catalano.Imaging.FastBitmap": {
+        "semantic_type": "image",
+        "onthological_caster": "de.upb.sede.casters.FastBitmapCaster"
+    },
+    "FastBitmap_List" : {
+        "semantic_type": "images",
+        "onthological_caster": "de.upb.sede.casters.FastBitmapCaster"
+    },
+    "Catalano.Imaging.Tools.ImageHistogram" : {
+        "semantic_type": "Arr",
+        "onthological_caster": "de.upb.sede.casters.ImageHistogramCaster"
+    },
+    "ImageHistogram_List" : {
+        "semantic_type": "dataset",
+        "onthological_caster": "de.upb.sede.casters.ImageHistogramCaster"
+    },
+    "ImageZip" : {
+        "semantic_type": "image_zip_bytes",
+        "onthological_caster": "de.upb.sede.casters.ImageZipCaster"
+    }
+}

@@ -1,0 +1,10 @@
+{
+  "builtin.List": {
+    "semantic_type": "jsonlist",
+    "onthological_caster": "de.upb.sede.BuiltinCaster"
+  },
+  "builtin.Dict": {
+    "semantic_type": "jsonobj",
+    "onthological_caster": "de.upb.sede.BuiltinCaster"
+  }
+}

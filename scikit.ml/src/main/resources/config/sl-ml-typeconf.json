@@ -1,0 +1,10 @@
+{
+  "LabeledInstances": {
+    "semantic_type": "dataset",
+    "onthological_caster": "ml.data.LabeledInstancesCaster"
+  },
+  "numpy.ndarray" : {
+    "semantic_type":"jsonlist",
+    "onthological_caster": "ml.data.NdArrayCaster"
+  }
+}

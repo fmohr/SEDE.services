@@ -1,0 +1,86 @@
+{
+  "$base_preprocessor_config$" : {
+    "abstract" : true,
+    "methods" : {
+      "preprocess":{},
+      "train":{}
+    }
+  },
+  "de.upb.sede.services.mls.WekaFilterWrapper" : {
+    "extends":["$base_preprocessor_config$"],
+    "methods" : {
+      "$construct": {
+        "params": [
+          "String"
+        ]
+      },
+      "train": {
+        "params": [
+          "weka.core.Instances"
+        ]
+      },
+      "preprocess": {
+        "params":[
+          "weka.core.Instances"
+        ],
+        "returntype" : "weka.core.Instances"
+      },
+      "set_options": {
+        "params":[
+          "builtin.List"
+        ]
+      }
+    }
+  },
+  "weka.filters.unsupervised.attribute.Normalize" : {
+    "wrapper" : "de.upb.sede.services.mls.WekaFilterWrapper",
+    "methods" : {
+      "$construct": {
+        "params": [
+          {
+            "type":"String",
+            "fixed": "\"weka.filters.unsupervised.attribute.Normalize\""
+          }
+        ]
+      }
+    }
+  },
+  "weka.filters.unsupervised.attribute.Standardize":{
+    "wrapper" : "de.upb.sede.services.mls.WekaFilterWrapper",
+    "methods" : {
+      "$construct": {
+        "params": [
+          {
+            "type":"String",
+            "fixed": "\"weka.filters.unsupervised.attribute.Standardize\""
+          }
+        ]
+      }
+    }
+  },
+  "de.upb.sede.services.mls.WekaASWrapper":{
+    "methods" : {
+      "$construct": {
+        "params": [
+          "String", "String", "builtin.List", "builtin.List"
+        ]
+      },
+      "train":{
+        "params": [
+          "weka.core.Instances"
+        ]
+      },
+      "preprocess":{
+        "params": [
+          "weka.core.Instances"
+        ],
+        "returntype": "weka.core.Instances",
+        "statemutating":false
+      }
+
+    }
+  },
+  "weka.attributeSelection.AttributeSelection" : {
+    "wrapper" : "de.upb.sede.services.mls.WekaASWrapper"
+  }
+}

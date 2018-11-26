@@ -1,0 +1,31 @@
+{
+  "gateways": [],
+  "capabilities": [],
+  "threadNumber": 4,
+  "services": [
+    "Catalano.Imaging.Filters.Resize",
+    "de.upb.sede.services.ImageArchive",
+    "de.upb.sede.services.Image2Feature",
+    "Catalano.Imaging.Filters.Crop",
+    "Catalano.Imaging.sede.CropFrom0",
+
+    "Catalano.Imaging.Filters.CannyEdgeDetector",
+    "Catalano.Imaging.Filters.CannyEdgeDetector_Threshold",
+    "Catalano.Imaging.Filters.CannyEdgeDetector_Threshold_Sigma",
+    "Catalano.Imaging.Filters.CannyEdgeDetector_Threshold_Sigma_Size",
+
+    "Catalano.Imaging.Filters.SobelEdgeDetector",
+
+    "Catalano.Imaging.Texture.BinaryPattern.LocalBinaryPattern",
+
+    "Catalano.Imaging.Filters.GrayScale",
+    "Catalano.Imaging.Filters.GrayScale_RGBCoeff",
+    "Catalano.Imaging.Filters.GrayScale_Lightness",
+    "Catalano.Imaging.Filters.GrayScale_Average",
+    "Catalano.Imaging.Filters.GrayScale_GeometricMean",
+    "Catalano.Imaging.Filters.GrayScale_Luminosity",
+    "Catalano.Imaging.Filters.GrayScale_MinimumDecomposition",
+    "Catalano.Imaging.Filters.GrayScale_MaximumDecomposition"
+  ],
+  "serviceStoreLocation": "instances"
+}

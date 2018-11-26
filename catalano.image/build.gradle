@@ -1,0 +1,20 @@
+version = '1.2'
+
+dependencies {
+    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
+    compile files(
+            'libs/Catalano.Core.jar',
+            'libs/Catalano.Image.jar',
+            'libs/Catalano.Math.jar',
+            'libs/Catalano.Statistics.jar')
+
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+
+    testCompile group: 'de.upb.isys', name: 'SEDE.http', version: '0.0.5'
+    testCompile project(":weka.ml")
+    testCompile project(":scikit.ml")
+}
+

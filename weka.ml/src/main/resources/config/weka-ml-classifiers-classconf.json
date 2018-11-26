@@ -1,0 +1,888 @@
+{
+  "de.upb.sede.services.mls.Labeler": {
+    "methods": {
+      "labelDataset": {
+        "params": [
+          {
+            "type": "LabeledInstances",
+            "statemutating": true
+          },
+          "builtin.List"
+        ],
+        "static": true
+      },
+      "setClassIndex": {
+        "params": [
+          {
+            "type": "LabeledInstances",
+            "statemutating": true
+          },
+          "Number"
+        ],
+        "static": true
+      },
+      "classIndicesToNames": {
+        "params": [
+          "builtin.List",
+          "builtin.List"
+        ],
+        "returntype" : "builtin.List",
+        "static": true
+      },
+      "classIndicesPrettify": {
+        "params": [
+          "builtin.List"
+        ],
+        "returntype" : "builtin.List",
+        "static": true
+      },
+      "categorize": {
+        "params": [
+          "builtin.List"
+        ],
+        "returntype" : "builtin.List",
+        "static": true
+      }
+    }
+  },
+  "de.upb.sede.services.mls.DataSetService": {
+    "methods": {
+      "$construct": {
+        "params": [
+          "String"
+        ]
+      },
+      "createUnique": {
+        "params": [
+          "LabeledInstances"
+        ],
+        "static": true,
+        "returntype": "de.upb.sede.services.mls.DataSetService"
+      },
+      "createNamed": {
+        "params": [
+          "LabeledInstances",
+          "String"
+        ],
+        "static": true,
+        "returntype": "de.upb.sede.services.mls.DataSetService"
+      },
+      "all": {
+        "statemutating": false,
+        "returntype": "LabeledInstances"
+      },
+      "allLabeled": {
+        "params": [
+          "Number"
+        ],
+        "statemutating": false,
+        "returntype": "LabeledInstances"
+      },
+      "fromIndices": {
+        "params": [
+          "builtin.List"
+        ],
+        "statemutating": false,
+        "returntype": "LabeledInstances"
+      },
+      "fromIndicesLabeled": {
+        "params": [
+          "builtin.List",
+          "Number"
+        ],
+        "statemutating": false,
+        "returntype": "LabeledInstances"
+      }
+    }
+  },
+  "$list_option_handler_config$" : {
+    "abstract": true,
+    "methods": {
+      "set_options": {
+        "params": [
+          "builtin.List"
+        ]
+      }
+    }
+  },
+  "$dict_option_handler_config$" : {
+    "abstract": true,
+    "methods": {
+      "set_options_dict": {
+        "params": [
+          "builtin.Dict"
+        ],
+        "statemutating": true
+      }
+    }
+  },
+  "$base_classifier_config$": {
+    "abstract": true,
+    "methods": {
+      "train": {},
+      "predict": {}
+    }
+  },
+  "de.upb.sede.services.mls.WekaBClassifierWrapper": {
+    "extends": [
+      "$base_classifier_config$", "$list_option_handler_config$", "$dict_option_handler_config$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          "String"
+        ]
+      },
+      "train": {
+        "params": [
+          "LabeledInstances"
+        ]
+      },
+      "predict": {
+        "params": [
+          "Bool",
+          "LabeledInstances"
+        ],
+        "returntype": "builtin.List",
+        "statemutating": false
+      }
+    }
+  },
+  "$Basic_Weka_Distribution_Classifier$": {
+    "wrapper": "de.upb.sede.services.mls.WekaBClassifierWrapper",
+    "methods": {
+      "predict": {
+        "params": [
+          {
+            "fixed": "TRUE",
+            "type": "Bool"
+          },
+          "LabeledInstances"
+        ],
+        "returntype": "builtin.List",
+        "statemutating": false
+      }
+    }
+  },
+  "$Basic_Weka_Index_Classifier$": {
+    "wrapper": "de.upb.sede.services.mls.WekaBClassifierWrapper",
+    "methods": {
+      "predict": {
+        "params": [
+          {
+            "fixed": "FALSE",
+            "type": "Bool"
+          },
+          "LabeledInstances"
+        ],
+        "returntype": "builtin.List",
+        "statemutating": false
+      }
+    }
+  },
+  "weka.classifiers.bayes.BayesNet": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.bayes.BayesNet\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.bayes.NaiveBayes": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.bayes.NaiveBayes\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.bayes.NaiveBayesMultinomial": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.bayes.NaiveBayesMultinomial\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.functions.GaussianProcesses": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.functions.GaussianProcesses\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.functions.LinearRegression": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.functions.LinearRegression\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.functions.Logistic": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.functions.Logistic\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.functions.MultilayerPerceptron": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.functions.MultilayerPerceptron\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.functions.SGD": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.functions.SGD\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.functions.LibSVM": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.functions.LibSVM\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.functions.SimpleLinearRegression": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.functions.SimpleLinearRegression\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.functions.SimpleLogistic": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.functions.SimpleLogistic\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.functions.SMO": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.functions.SMO\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.functions.SMOreg": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.functions.SMOreg\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.functions.VotedPerceptron": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.functions.VotedPerceptron\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.lazy.IBk": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.lazy.IBk\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.lazy.KStar": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.lazy.KStar\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.rules.DecisionTable": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.rules.DecisionTable\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.rules.JRip": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.rules.JRip\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.rules.M5Rules": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.rules.M5Rules\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.rules.OneR": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.rules.OneR\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.rules.PART": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.rules.PART\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.rules.ZeroR": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.rules.ZeroR\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.trees.DecisionStump": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.trees.DecisionStump\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.trees.J48": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.trees.J48\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.trees.LMT": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.trees.LMT\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.trees.M5P": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.trees.M5P\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.trees.RandomForest": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.trees.RandomForest\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.trees.RandomTree": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.trees.RandomTree\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.trees.REPTree": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.trees.REPTree\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.meta.nestedDichotomies.ND": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.meta.nestedDichotomies.ND\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.meta.nestedDichotomies.RandomPairND": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.meta.nestedDichotomies.RandomPairND\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.meta.nestedDichotomies.ClassBalancedND": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.meta.nestedDichotomies.ClassBalancedND\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.meta.nestedDichotomies.DataNearBalancedND": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.meta.nestedDichotomies.DataNearBalancedND\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.meta.nestedDichotomies.FurthestCentroidND": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.meta.nestedDichotomies.FurthestCentroidND\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.lazy.LWL": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.lazy.LWL\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.meta.AdditiveRegression": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.meta.AdditiveRegression\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.meta.AdaBoostM1": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.meta.AdaBoostM1\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.meta.AttributeSelectedClassifier": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.meta.AttributeSelectedClassifier\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.meta.Bagging": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.meta.Bagging\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.meta.ClassificationViaRegression": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.meta.ClassificationViaRegression\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.meta.LogitBoost": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.meta.LogitBoost\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.meta.MultiClassClassifier": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.meta.MultiClassClassifier\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.meta.RandomCommittee": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.meta.RandomCommittee\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.meta.RandomSubSpace": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.meta.RandomSubSpace\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.meta.Vote": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.meta.Vote\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.meta.Stacking": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.meta.Stacking\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  },
+  "weka.classifiers.meta.MultiBoostAB": {
+    "extends": [
+      "$Basic_Weka_Index_Classifier$"
+    ],
+    "methods": {
+      "$construct": {
+        "params": [
+          {
+            "fixed": "\"weka.classifiers.meta.MultiBoostAB\"",
+            "type": "String"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "$base_preprocessor_config$" : {
+    "abstract" : true,
+    "methods" : {
+      "preprocess":{},
+      "train":{}
+    }
+  },
+  "$list_option_handler_config$" : {
+    "abstract": true,
+    "methods": {
+      "set_options": {
+        "params": [
+          "builtin.List"
+        ]
+      }
+    }
+  },
+  "$dict_option_handler_config$" : {
+    "abstract": true,
+    "methods": {
+      "set_options_dict": {
+        "params": [
+          "builtin.Dict"
+        ]
+      }
+    }
+  },
+  "de.upb.sede.services.mls.WekaFilterWrapper" : {
+    "extends":["$base_preprocessor_config$", "$list_option_handler_config$", "$dict_option_handler_config$"],
+    "methods" : {
+      "$construct": {
+        "params": [
+          "String"
+        ]
+      },
+      "train": {
+        "params": [
+          "LabeledInstances"
+        ]
+      },
+      "preprocess": {
+        "params":[
+          "LabeledInstances"
+        ],
+        "returntype" : "LabeledInstances"
+      },
+      "set_options": {
+        "params":[
+          "builtin.List"
+        ]
+      }
+    }
+  },
+  "weka.filters.unsupervised.attribute.Normalize" : {
+    "wrapper" : "de.upb.sede.services.mls.WekaFilterWrapper",
+    "methods" : {
+      "$construct": {
+        "params": [
+          {
+            "type":"String",
+            "fixed": "\"weka.filters.unsupervised.attribute.Normalize\""
+          }
+        ]
+      }
+    }
+  },
+  "weka.filters.unsupervised.attribute.Standardize":{
+    "wrapper" : "de.upb.sede.services.mls.WekaFilterWrapper",
+    "methods" : {
+      "$construct": {
+        "params": [
+          {
+            "type":"String",
+            "fixed": "\"weka.filters.unsupervised.attribute.Standardize\""
+          }
+        ]
+      }
+    }
+  },
+  "de.upb.sede.services.mls.WekaASWrapper":{
+    "extends":["$base_preprocessor_config$", "$dict_option_handler_config$"],
+    "methods" : {
+      "$construct": {},
+      "__construct1": {
+        "params": [
+          "String", "String", "builtin.List", "builtin.List"
+        ],
+        "realisedby" :{
+          "methodname" : "$construct",
+          "overload" : true
+        }
+
+      },
+      "train":{
+        "params": [
+          "LabeledInstances"
+        ]
+      },
+      "preprocess":{
+        "params": [
+          "LabeledInstances"
+        ],
+        "returntype": "LabeledInstances",
+        "statemutating":false
+      }
+
+    }
+  },
+  "weka.attributeSelection.AttributeSelection" : {
+    "wrapper" : "de.upb.sede.services.mls.WekaASWrapper"
+  }
+}

@@ -1,0 +1,125 @@
+plugins {
+    id "net.linguica.maven-settings" version "0.5" apply false
+}
+
+
+subprojects {
+
+    /*
+        configuration for all sub projects.
+     */
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+    apply plugin: 'net.linguica.maven-settings'
+    apply plugin: 'eclipse'
+
+    group = 'de.upb.isys'
+    version = '0.1'
+
+    repositories {
+        mavenLocal()
+        jcenter()
+        mavenCentral()
+        maven {
+            url "https://nexus.cs.upb.de/repository/maven-releases/"
+        }
+        maven { url 'https://jitpack.io' }
+    }
+
+    dependencies {
+		compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+        // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl
+        testRuntimeOnly group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.11.1'
+
+
+        // https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all
+        testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
+        testCompile "junit:junit:4.12"
+    }
+
+    /* Set working directory of tests to root folder: */
+    test{
+        workingDir = new File("${rootDir}")
+        ignoreFailures = true
+    }
+
+
+    // source Jar:
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from sourceSets.main.allJava
+    }
+
+    // classconf and typeconf Jar:
+    task jarconf(type: Jar) {
+        destinationDir = file("$rootDir/deploy/SEDE")
+        baseName = project.name
+        classifier = "serviceconf"
+
+        from (sourceSets.main.resources.
+                findAll { it.name.endsWith('classconf.json') || it.name.endsWith('typeconf.json') }
+                .collect {it}) {
+            into "config"}
+    }
+
+    // build Jar:
+    task jarjar(type: Jar, dependsOn: [assemble, jarconf]) {
+
+        manifest {
+            attributes 'Implementation-Title': "${project.name}",
+                    'Implementation-Version': version
+        }
+        destinationDir = file("$rootDir/deploy/java_bin")
+        baseName = project.name
+
+        from { (configurations.compile)
+                .findAll { it.name.endsWith('jar') }
+                .collect { zipTree(it) } }
+        from sourceSets.main.output
+    }
+
+    // copy python source:
+    task buildPython(type: Copy) {
+        from "${projectDir}/src/main/python/"
+        include "**/*.py"
+        into "${rootDir}/deploy/SEDE_python/${project.name}"
+    }
+
+    clean.doFirst {
+        delete fileTree("$rootDir") {
+            include '*.jar'
+        }
+        delete "${projectDir}/testrsc"
+        delete "${projectDir}/out"
+        delete "${projectDir}/instances"
+        delete "${projectDir}/servicespec"
+        delete "${rootDir}/deploy/SEDE"
+        delete "${rootDir}/deploy/SEDE_Python"
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                afterEvaluate {
+                    from components.java
+                    artifact sourcesJar
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                name = 'sfb901'
+                url = "https://nexus.cs.upb.de/repository/maven-releases/"
+            }
+        }
+    }
+    test {
+        exclude '**/demo/*.class'
+    }
+}
+project(':weka.ml') {
+    test {
+        exclude '**/TestLabeledInstancesCaster.class'
+    }
+}

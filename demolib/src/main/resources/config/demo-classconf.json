@@ -1,0 +1,96 @@
+{
+    "demo.math.Addierer": {
+        "methods": {
+            "$construct": {
+                "params": [
+                    {
+                        "type": "Number",
+                        "statemutating": true
+                    }
+                ]
+            },
+            "ZEHN_ADDIERER": {
+                "returntype": "demo.math.Addierer",
+                "static": true
+            },
+            "addier": {
+                "params": [
+                    "Number"
+                ],
+                "returntype": "Number",
+                "statemutating": false
+            },
+            "addierListe": {
+                "params": [
+                    "demo.types.NummerList"
+                ],
+                "returntype": "demo.types.NummerList",
+                "statemutating": false
+            },
+            "summierListe": {
+                "params": [
+                    "demo.types.NummerList",
+                    "demo.types.NummerList"
+                ],
+                "returntype": "demo.types.NummerList",
+                "statemutating": false,
+                "static": true
+            },
+            "summier": {
+                "params": [
+                    "demo.types.NummerList"
+                ],
+                "returntype": "Number",
+                "statemutating": false
+            },
+            "fail": {
+                "params": [],
+                "returntype": "demo.types.NummerList",
+                "static": true
+            },
+            "sleep": {
+                "params": [],
+                "static": true
+            },
+            "addierBuiltIn":{
+                "params":["builtin.List", "Number"],
+                "returntype":"builtin.List",
+                "static" : true
+            }
+        }
+    },
+    "demo.math.Gerade": {
+        "methods": {
+            "$construct": {
+                "params": [
+                    "Number",
+                    "Number"
+                ]
+            },
+            "calc": {
+                "params": [
+                    "Number"
+                ],
+                "returntype": "demo.types.Punkt",
+                "statemutating": true
+            },
+            "liagtAufGerade": {
+                "params": [
+                    "demo.types.Punkt"
+                ],
+                "returntype": "Bool",
+                "statemutating": false
+            },
+            "achsenabschnitt": {
+                "params": [],
+                "returntype": "demo.types.Punkt",
+                "statemutating": false
+            },
+            "nullstelle": {
+                "params": [],
+                "returntype": "demo.types.Punkt",
+                "statemutating": false
+            }
+        }
+    }
+}

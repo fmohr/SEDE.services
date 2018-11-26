@@ -1,0 +1,47 @@
+{
+
+    "$Image_Processor$" : {
+        "abstract": true,
+        "methods": {
+            "process" : {}
+        }
+    },
+    "$dict_option_handler_config$" : {
+        "abstract": true,
+        "methods": {
+            "set_options_dict": {
+                "params": [
+                    "builtin.Dict"
+                ],
+                "statemutating": true
+            }
+        }
+    },
+    "$Abstract_C2_Plugin$": {
+        "extends" : ["$Image_Processor$", "$dict_option_handler_config$"],
+        "abstract" : true,
+        "methods": {
+            "process": {
+                "params": [
+                    {
+                        "type": "C2Image_List",
+                        "statemutating": true
+                    }
+                ],
+                "statemutating": false
+            }
+        }
+    },
+    "C2Services.C2service_grey": {
+      "extends" : ["$Abstract_C2_Plugin$"],
+      "methods": {
+        "compute": {
+            "params": [
+                "Number", "Number"
+            ],
+            "returntype": "Number",
+            "statemutating": true
+        }
+    }
+    }
+}
