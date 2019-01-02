@@ -1,5 +1,7 @@
 plugins {
     id "net.linguica.maven-settings" version "0.5" apply false
+    id 'com.github.johnrengelman.shadow' version '4.0.3' apply true
+    id 'java'
 }
 
 
@@ -11,6 +13,7 @@ subprojects {
     apply plugin: 'java-library'
     apply plugin: 'maven-publish'
     apply plugin: 'net.linguica.maven-settings'
+    apply plugin: 'com.github.johnrengelman.shadow'
     apply plugin: 'eclipse'
 
     group = 'de.upb.isys'
@@ -97,15 +100,21 @@ subprojects {
         delete "${rootDir}/deploy/SEDE_Python"
     }
 
+
+
+    test {
+        exclude '**/demo/*.class'
+    }
+}
+project(':builtins') {
+    version = 1.0
+
     publishing {
         publications {
-            mavenJava(MavenPublication) {
-                afterEvaluate {
-                    from components.java
-                    artifact sourcesJar
-                }
+            shadow(MavenPublication) {  
+                    publication -> project.shadow.component(publication)
             }
-        }
+          }   
 
         repositories {
             maven {
@@ -114,12 +123,6 @@ subprojects {
             }
         }
     }
-    test {
-        exclude '**/demo/*.class'
-    }
-}
-project(':builtins') {
-    version = 1.0
 }
 project(':weka.ml') {
     version = 1.4
@@ -147,15 +150,67 @@ project(':weka.ml') {
         testCompile group: 'de.upb.isys', name: 'SEDE.http', version: '0.0.5'
         testCompile group: 'junit', name: 'junit', version: '4.12'
     }
+
+    publishing {
+        publications {
+            shadow(MavenPublication) {  
+                    publication -> project.shadow.component(publication)
+            }
+          }   
+
+        repositories {
+            maven {
+                name = 'sfb901'
+                url = "https://nexus.cs.upb.de/repository/maven-releases/"
+            }
+        }
+    }
 }
 project(':scikit.ml') {
     version = 1.1
+
+    publishing {
+        publications {
+            shadow(MavenPublication) {  
+                    publication -> project.shadow.component(publication)
+            }
+          }   
+
+        repositories {
+            maven {
+                name = 'sfb901'
+                url = "https://nexus.cs.upb.de/repository/maven-releases/"
+            }
+        }
+    }
 }
 project(':c2.image') {
     version = 1.0
+
+    publishing {
+        publications {
+            shadow(MavenPublication) {  
+                    publication -> project.shadow.component(publication)
+            }
+          }   
+
+        repositories {
+            maven {
+                name = 'sfb901'
+                url = "https://nexus.cs.upb.de/repository/maven-releases/"
+            }
+        }
+    }
 }
 project(':catalano.image') {
-    version = '1.2'
+
+    version = '1.3'
+
+    
+    shadowJar {
+        baseName = 'shadow'
+        classifier = ''
+    }
 
     dependencies {
         // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
@@ -167,12 +222,29 @@ project(':catalano.image') {
                 'libs/Catalano.Math.jar',
                 'libs/Catalano.Statistics.jar')
 
+        
+
         // https://mvnrepository.com/artifact/commons-io/commons-io
         compile group: 'commons-io', name: 'commons-io', version: '2.6'
 
         testCompile group: 'de.upb.isys', name: 'SEDE.http', version: '0.0.5'
         testCompile project(":weka.ml")
         testCompile project(":scikit.ml")
+    }
+
+    publishing {
+        publications {
+            shadow(MavenPublication) {  
+                    publication -> project.shadow.component(publication)
+            }
+          }   
+
+        repositories {
+            maven {
+                name = 'sfb901'
+                url = "https://nexus.cs.upb.de/repository/maven-releases/"
+            }
+        }
     }
 }
 project(':demolib') {
@@ -183,4 +255,18 @@ project(':demolib') {
         compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
     }
 
+    publishing {
+        publications {
+            shadow(MavenPublication) {  
+                publication -> project.shadow.component(publication)
+            }
+          }   
+
+        repositories {
+            maven {
+                name = 'sfb901'
+                url = "https://nexus.cs.upb.de/repository/maven-releases/"
+            }
+        }
+    }
 }
