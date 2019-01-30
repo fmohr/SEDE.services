@@ -1,12 +1,11 @@
 {
-
-    "$Image_Processor$" : {
+    "$Image_Processor$": {
         "abstract": true,
         "methods": {
-            "process" : {}
+            "process": {}
         }
     },
-    "$dict_option_handler_config$" : {
+    "$dict_option_handler_config$": {
         "abstract": true,
         "methods": {
             "set_options_dict": {
@@ -17,31 +16,95 @@
             }
         }
     },
-    "$Abstract_C2_Plugin$": {
-        "extends" : ["$Image_Processor$", "$dict_option_handler_config$"],
-        "abstract" : true,
+    "$Abstract_C2_ImageFilter_Service$": {
+        "extends": [
+            "$Image_Processor$",
+            "$dict_option_handler_config$"
+        ],
+        "abstract": true,
         "methods": {
-            "process": {
+            "processImage": {
                 "params": [
-                    {
-                        "type": "C2Image_List",
-                        "statemutating": true
-                    }
+                    "C2Data.C2Image"
                 ],
+                "returntype": "C2Data.C2Image",
                 "statemutating": false
+            },
+            "processImages": {
+                "params": [
+                    "C2Data.C2ImageList"
+                ],
+                "returntype": "C2Data.C2ImageList",
+                "statemutating": false
+            },
+            "process": {
+                "realisedby": {
+                    "methodname": "processImages",
+                    "overload": true
+                }
+            },
+            "setOptions": {
+                "params": [
+                    "C2Data.C2Params"
+                ],
+                "statemutating": true
+            },
+            "set_options_dict": {
+                "realisedby": {
+                    "methodname": "setOptions",
+                    "overload": true
+                }
             }
         }
     },
-    "C2Services.C2service_grey": {
-      "extends" : ["$Abstract_C2_Plugin$"],
-      "methods": {
-        "compute": {
-            "params": [
-                "Number", "Number"
-            ],
-            "returntype": "Number",
-            "statemutating": true
-        }
-    }
+    "C2Services.C2Service_grey_CPU": {
+        "extends": [
+            "$Abstract_C2_ImageFilter_Service$"
+        ]
+    },
+    "C2Services.C2Service_grey_FPGA": {
+        "extends": [
+            "$Abstract_C2_ImageFilter_Service$"
+        ]
+    },
+    "C2Services.C2Service_grey_GPU": {
+        "extends": [
+            "$Abstract_C2_ImageFilter_Service$"
+        ]
+    },
+    "C2Services.C2Service_grey_JAVA": {
+        "extends": [
+            "$Abstract_C2_ImageFilter_Service$"
+        ]
+    },
+    "C2Services.C2Service_grey_SCPU": {
+        "extends": [
+            "$Abstract_C2_ImageFilter_Service$"
+        ]
+    },
+    "C2Services.C2Service_sobel_CPU": {
+        "extends": [
+            "$Abstract_C2_ImageFilter_Service$"
+        ]
+    },
+    "C2Services.C2Service_sobel_FPGA": {
+        "extends": [
+            "$Abstract_C2_ImageFilter_Service$"
+        ]
+    },
+    "C2Services.C2Service_sobel_GPU": {
+        "extends": [
+            "$Abstract_C2_ImageFilter_Service$"
+        ]
+    },
+    "C2Services.C2Service_sobel_JAVA": {
+        "extends": [
+            "$Abstract_C2_ImageFilter_Service$"
+        ]
+    },
+    "C2Services.C2Service_sobel_SCPU": {
+        "extends": [
+            "$Abstract_C2_ImageFilter_Service$"
+        ]
     }
 }

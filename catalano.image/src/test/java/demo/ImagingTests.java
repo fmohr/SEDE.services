@@ -75,25 +75,26 @@ public class ImagingTests {
 		creator = new ExecutorConfigurationCreator();
 		creator.withExecutorId("executor");
 		executor1 = new ExecutorHttpServer(ExecutorConfiguration.parseJSON(creator.toString()), executor1Address, executorPort);
-		executor1.getBasisExecutor().getExecutorConfiguration().getSupportedServices().addAll(
+//		executor1.getBasisExecutor().getExecutorConfiguration().getSupportedServices().addAll(
 				Arrays.asList(
-						"Catalano.Imaging.Filters.Crop",
-						"Catalano.Imaging.Filters.Resize",
-						"Catalano.Imaging.sede.CropFrom0",
-						"Catalano.Imaging.Filters.CannyEdgeDetector",
-						"Catalano.Imaging.Filters.SobelEdgeDetector",
-						"Catalano.Imaging.Filters.CannyEdgeDetector_Threshold",
-						"Catalano.Imaging.Texture.BinaryPattern.LocalBinaryPattern",
-						"Catalano.Imaging.Filters.GrayScale",
-						"Catalano.Imaging.Filters.GrayScale_RGBCoeff",
-						"Catalano.Imaging.Filters.GrayScale_Lightness",
-						"Catalano.Imaging.Filters.GrayScale_Average",
-						"Catalano.Imaging.Filters.GrayScale_GeometricMean",
-						"Catalano.Imaging.Filters.GrayScale_Luminosity",
-						"Catalano.Imaging.Filters.GrayScale_MinimumDecomposition",
-						"Catalano.Imaging.Filters.GrayScale_MaximumDecomposition"
-						)
-		);
+//						"Catalano.Imaging.Filters.Crop",
+//						"Catalano.Imaging.Filters.Resize",
+//						"Catalano.Imaging.Filters.Resize_",
+//						"Catalano.Imaging.sede.CropFrom0",
+//						"Catalano.Imaging.Filters.CannyEdgeDetector",
+//						"Catalano.Imaging.Filters.SobelEdgeDetector",
+//						"Catalano.Imaging.Filters.CannyEdgeDetector_Threshold",
+//						"Catalano.Imaging.Texture.BinaryPattern.LocalBinaryPattern",
+//						"Catalano.Imaging.Filters.GrayScale",
+//						"Catalano.Imaging.Filters.GrayScale_RGBCoeff",
+//						"Catalano.Imaging.Filters.GrayScale_Lightness",
+//						"Catalano.Imaging.Filters.GrayScale_Average",
+//						"Catalano.Imaging.Filters.GrayScale_GeometricMean",
+//						"Catalano.Imaging.Filters.GrayScale_Luminosity",
+//						"Catalano.Imaging.Filters.GrayScale_MinimumDecomposition",
+//						"Catalano.Imaging.Filters.GrayScale_MaximumDecomposition"
+//						)
+//		);
 		System.out.println(executor1.getBasisExecutor().getExecutorConfiguration().toJsonString());
 		gateway.getBasis().register(executor1.getBasisExecutor().registration());
 		/*
@@ -121,19 +122,35 @@ public class ImagingTests {
 	@Test
 	public void testImageProcessing1() {
 		String composition =
-				"s1 = Catalano.Imaging.Filters.Crop::__construct({i1=5, i2=5, i3=300, i4=300});\n" +
+				"s1 = Catalano.Imaging.Filters.Crop::__construct();\n" +
+				"s1::configure({crop_options});\n" +
 				"s1::applyInPlace({i1=imageIn});\n" +
-				"s2 = Catalano.Imaging.Filters.Resize::__construct({i1=200, i2=200});\n" +
+				"s2 = Catalano.Imaging.Filters.Resize::__construct();\n" +
+				"s2::configure({resize_options});\n" +
 				"imageOut = s2::applyInPlace({i1=imageIn});";
 
 		ResolvePolicy policy = new ResolvePolicy();
 		policy.setServicePolicy("None");
 		policy.setReturnFieldnames(Arrays.asList("imageOut"));
 
+		Map<String, Number> cropOptions = new HashMap<>();
+		cropOptions.put("x", 10);
+		cropOptions.put("y", 10);
+		cropOptions.put("width", 100);
+		cropOptions.put("height", 100);
+		SEDEObject cropOptionsSEDEObject = new ObjectDataField("builtin.Dict", cropOptions);
 		SEDEObject inputObject_fb1 = new ObjectDataField(FastBitmap.class.getName(), frog);
+
+
+		Map<String, Number> resizeOptions = new HashMap<>();
+		resizeOptions.put("width", 500);
+		resizeOptions.put("height", 500);
+		SEDEObject resizeOptionsSEDEObject = new ObjectDataField("builtin.Dict", cropOptions);
 
 		Map<String, SEDEObject> inputs = new HashMap<>();
 		inputs.put("imageIn", inputObject_fb1);
+		inputs.put("crop_options", cropOptionsSEDEObject);
+		inputs.put("resize_options", resizeOptionsSEDEObject);
 
 		JOptionPane.showMessageDialog(null, frog.toIcon(), "Original image", JOptionPane.PLAIN_MESSAGE);
 
@@ -303,13 +320,15 @@ public class ImagingTests {
 
 	private static ClassesConfig getTestClassConfig() {
 		ClassesConfig classesConfig = new ClassesConfig();
-		classesConfig.appendConfigFromJsonStrings(FileUtil.readResourceAsString("config/imaging-classconf.json"));
+		classesConfig.appendConfigFromJsonStrings(FileUtil.readResourceAsString("config/imaging-classconf.json")
+				, FileUtil.readResourceAsString("config/builtin-classconf.json"));
 		return classesConfig;
 	}
 
 	private static OnthologicalTypeConfig getTestTypeConfig() {
 		OnthologicalTypeConfig typeConfig = new OnthologicalTypeConfig();
-		typeConfig.appendConfigFromJsonStrings(FileUtil.readResourceAsString("config/imaging-typeconf.json"));
+		typeConfig.appendConfigFromJsonStrings(FileUtil.readResourceAsString("config/imaging-typeconf.json")
+		, FileUtil.readResourceAsString("config/builtin-typeconf.json"));
 		return typeConfig;
 	}
 }

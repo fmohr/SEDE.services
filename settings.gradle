@@ -1,6 +1,4 @@
 import java.io.File;
-enableFeaturePreview('STABLE_PUBLISHING')
-
 
 /*
  * Projects offering services.

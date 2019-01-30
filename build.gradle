@@ -28,6 +28,13 @@ subprojects {
         }
         maven { url 'https://jitpack.io' }
     }
+    
+    shadowJar {
+        baseName = ''
+        classifier = ''
+        exclude "log4j.xml"
+    }
+
 
     dependencies {
 		compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
@@ -107,13 +114,14 @@ subprojects {
     }
 }
 project(':builtins') {
-    version = 1.0
+    version = 1.1
 
     publishing {
         publications {
-            shadow(MavenPublication) {  
-                    publication -> project.shadow.component(publication)
-            }
+            mavenJava(MavenPublication) { afterEvaluate {
+                from components.java
+                artifact sourcesJar
+            } }
           }   
 
         repositories {
@@ -125,12 +133,11 @@ project(':builtins') {
     }
 }
 project(':weka.ml') {
-    version = 1.4
+    version = 1.5
     sourceCompatibility = 1.8
     test {
         exclude '**/TestLabeledInstancesCaster.class'
     }
-
     dependencies {
         compile group: 'de.upb.isys', name: 'meka', version: '0.0.1'
         compile group: 'de.upb.isys', name: 'interruptable-weka', version: '0.0.1'
@@ -147,15 +154,16 @@ project(':weka.ml') {
         testCompile project(path: ':builtins')
 
 
-        testCompile group: 'de.upb.isys', name: 'SEDE.http', version: '0.0.5'
+        testCompile group: 'de.upb.isys', name: 'SEDE.http', version: '0.0.+'
         testCompile group: 'junit', name: 'junit', version: '4.12'
     }
 
     publishing {
         publications {
-            shadow(MavenPublication) {  
-                    publication -> project.shadow.component(publication)
-            }
+            mavenJava(MavenPublication) { afterEvaluate {
+                from components.java
+                artifact sourcesJar
+            }}
           }   
 
         repositories {
@@ -167,13 +175,13 @@ project(':weka.ml') {
     }
 }
 project(':scikit.ml') {
-    version = 1.1
+    version = 1.2
 
     publishing {
         publications {
-            shadow(MavenPublication) {  
-                    publication -> project.shadow.component(publication)
-            }
+            mavenJava(MavenPublication) { afterEvaluate {
+                from components.java
+            } }
           }   
 
         repositories {
@@ -185,13 +193,13 @@ project(':scikit.ml') {
     }
 }
 project(':c2.image') {
-    version = 1.0
+    version = 1.2
 
     publishing {
         publications {
-            shadow(MavenPublication) {  
-                    publication -> project.shadow.component(publication)
-            }
+            mavenJava(MavenPublication) { afterEvaluate {
+                from components.java
+            } }
           }   
 
         repositories {
@@ -204,13 +212,7 @@ project(':c2.image') {
 }
 project(':catalano.image') {
 
-    version = '1.3'
-
-    
-    shadowJar {
-        baseName = 'shadow'
-        classifier = ''
-    }
+    version = 1.4
 
     dependencies {
         // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
@@ -227,7 +229,7 @@ project(':catalano.image') {
         // https://mvnrepository.com/artifact/commons-io/commons-io
         compile group: 'commons-io', name: 'commons-io', version: '2.6'
 
-        testCompile group: 'de.upb.isys', name: 'SEDE.http', version: '0.0.5'
+        testCompile group: 'de.upb.isys', name: 'SEDE.http', version: '0.0.+'
         testCompile project(":weka.ml")
         testCompile project(":scikit.ml")
     }
@@ -248,7 +250,7 @@ project(':catalano.image') {
     }
 }
 project(':demolib') {
-    version = '1.0'
+    version = 1.1
 
     dependencies {
         // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
@@ -257,9 +259,10 @@ project(':demolib') {
 
     publishing {
         publications {
-            shadow(MavenPublication) {  
-                publication -> project.shadow.component(publication)
-            }
+            mavenJava(MavenPublication) { afterEvaluate {
+                from components.java
+                artifact sourcesJar
+            } }
           }   
 
         repositories {
