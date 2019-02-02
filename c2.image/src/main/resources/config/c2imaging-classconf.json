@@ -82,6 +82,11 @@
             "$Abstract_C2_ImageFilter_Service$"
         ]
     },
+    "C2Services.C2Service_grey_OVERLAY": {
+        "extends": [
+            "$Abstract_C2_ImageFilter_Service$"
+        ]
+    },
     "C2Services.C2Service_sobel_CPU": {
         "extends": [
             "$Abstract_C2_ImageFilter_Service$"
@@ -103,6 +108,11 @@
         ]
     },
     "C2Services.C2Service_sobel_SCPU": {
+        "extends": [
+            "$Abstract_C2_ImageFilter_Service$"
+        ]
+    },
+    "C2Services.C2Service_sobel_OVERLAY": {
         "extends": [
             "$Abstract_C2_ImageFilter_Service$"
         ]

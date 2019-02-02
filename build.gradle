@@ -212,7 +212,7 @@ project(':c2.image') {
 }
 project(':catalano.image') {
 
-    version = 1.4
+    version = 1.5
 
     dependencies {
         // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
