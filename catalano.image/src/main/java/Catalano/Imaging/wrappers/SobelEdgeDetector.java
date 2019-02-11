@@ -12,6 +12,9 @@ public class SobelEdgeDetector extends AbstractImageProcessor {
 	}
 
 	public void applyInPlace(FastBitmap fb) {
+		if(!fb.isGrayscale()) {
+			fb.toGrayscale();
+		}
 		sobelEdgeDetector.applyInPlace(fb);
 	}
 }

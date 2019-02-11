@@ -36,6 +36,9 @@ public class CannyEdgeDetector extends AbstractImageProcessor {
 		if(cannyEdgeDetector == null) {
 			throw new IllegalStateException("Image Processor not initialized.");
 		}
+		if(!fb.isGrayscale()) {
+			fb.toGrayscale();
+		}
 		cannyEdgeDetector.applyInPlace(fb);
 	}
 }
