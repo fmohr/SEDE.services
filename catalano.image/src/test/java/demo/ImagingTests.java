@@ -76,7 +76,7 @@ public class ImagingTests {
 		creator.withExecutorId("executor");
 		executor1 = new ExecutorHttpServer(ExecutorConfiguration.parseJSON(creator.toString()), executor1Address, executorPort);
 //		executor1.getBasisExecutor().getExecutorConfiguration().getSupportedServices().addAll(
-				Arrays.asList(
+//				Arrays.asList(
 //						"Catalano.Imaging.Filters.Crop",
 //						"Catalano.Imaging.Filters.Resize",
 //						"Catalano.Imaging.Filters.Resize_",

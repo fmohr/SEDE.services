@@ -139,8 +139,12 @@ project(':weka.ml') {
         exclude '**/TestLabeledInstancesCaster.class'
     }
     dependencies {
-        compile group: 'de.upb.isys', name: 'meka', version: '0.0.1'
-        compile group: 'de.upb.isys', name: 'interruptable-weka', version: '0.0.1'
+        // https://mvnrepository.com/artifact/ai.libs.thirdparty/interruptible-meka
+        compile group: 'ai.libs.thirdparty', name: 'interruptible-meka', version: '0.1.0'
+
+        // https://mvnrepository.com/artifact/ai.libs.thirdparty/interruptible-weka
+        compile group: 'ai.libs.thirdparty', name: 'interruptible-weka', version: '0.1.2'
+
         // https://mvnrepository.com/artifact/nz.ac.waikato.cms.weka.thirdparty/bounce
         compile group: 'nz.ac.waikato.cms.weka.thirdparty', name: 'bounce', version: '0.18'
 
@@ -271,5 +275,15 @@ project(':demolib') {
                 url = "https://nexus.cs.upb.de/repository/maven-releases/"
             }
         }
+    }
+}
+
+project(":c2.image") {
+    version = 1.1
+    dependencies {
+        testCompile group: 'de.upb.isys', name: 'SEDE.gateway', version: '0.0.6'
+        testCompile group: 'de.upb.isys', name: 'SEDE.executor', version: '0.0.6'
+        testCompile project(":builtins")
+        testCompile project(":catalano.image")
     }
 }
